@@ -26,7 +26,7 @@ public class hasil {
         this.golput = golput;
     }
 
-    public static void postHasil(int idTps, int suara1, int suara2, int suara3, int golput){
+    public static void postHasil(int idTps, int suara1, int suara2, int suara3, int golput) {
         Connection connection = DB.connect();
 
         if (connection != null) {
@@ -49,11 +49,34 @@ public class hasil {
         }
     }
 
-    public static boolean check(int idTps){
+    public static void patchHasil(int idTps, int suara1, int suara2, int suara3, int golput) {
         Connection connection = DB.connect();
 
-        if(connection != null){
-            try{
+        if (connection != null) {
+            try {
+                // Lakukan operasi SQL untuk memasukkan hasil suara ke database
+                String query = "UPDATE hasilSuara SET paslon1 = ?, paslon2 = ?, paslon3 = ?, golput = ? WHERE id_tps = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setInt(1, suara1);
+                statement.setInt(2, suara2);
+                statement.setInt(3, suara3);
+                statement.setInt(4, golput);
+                statement.setInt(5, idTps);
+
+                statement.executeUpdate();
+
+                DB.close(connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static boolean check(int idTps) {
+        Connection connection = DB.connect();
+
+        if (connection != null) {
+            try {
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM hasilSuara WHERE id_tps = ?");
                 statement.setInt(1, idTps);
                 ResultSet resultSet = statement.executeQuery();
@@ -65,9 +88,8 @@ public class hasil {
                     DB.close(connection);
                     return true;
                 }
-    
 
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
