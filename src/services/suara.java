@@ -30,13 +30,12 @@ public class suara {
         }
 
         // input provinsi yang dipilih
-        Scanner scanner = new Scanner(System.in);
-        int prov = scanner.nextInt();
+        int prov = inputValidasi();
 
         if (!idProv.contains(prov)) {
             do {
                 System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor provinsi yang tersedia: ");
-                prov = scanner.nextInt();
+                prov = inputValidasi();
             } while (!idProv.contains(prov));
         }
 
@@ -58,12 +57,12 @@ public class suara {
         }
 
         // input kota yang dipilih
-        int selectedKota = scanner.nextInt();
+        int selectedKota = inputValidasi();
 
         if (!idKota.contains(selectedKota)) {
             do {
                 System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor kota yang tersedia: ");
-                selectedKota = scanner.nextInt();
+                selectedKota = inputValidasi();
             } while (!idKota.contains(selectedKota));
         }
 
@@ -85,12 +84,12 @@ public class suara {
         }
 
         // input kecamatan yang dipilih
-        int selectedKec = scanner.nextInt();
+        int selectedKec = inputValidasi();
 
         if (!idKec.contains(selectedKec)) {
             do {
                 System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor kecamatan yang tersedia: ");
-                selectedKota = scanner.nextInt();
+                selectedKota = inputValidasi();
             } while (!idKec.contains(selectedKota));
         }
 
@@ -112,12 +111,12 @@ public class suara {
         }
 
         // input desa yang dipilih
-        int selectedDesa = scanner.nextInt();
+        int selectedDesa = inputValidasi();
 
         if (!idDesa.contains(selectedDesa)) {
             do {
                 System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor desa yang tersedia: ");
-                selectedDesa = scanner.nextInt();
+                selectedDesa = inputValidasi();
             } while (!idDesa.contains(selectedDesa));
         }
 
@@ -139,28 +138,79 @@ public class suara {
         }
 
         // input TPS yang dipilih
-        int selectedTps = scanner.nextInt();
+        int selectedTps = inputValidasi();
 
         if (!idTps.contains(selectedTps)) {
             do {
                 System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor TPS yang tersedia: ");
-                selectedTps = scanner.nextInt();
+                selectedTps = inputValidasi();
             } while (!idTps.contains(selectedTps));
         }
 
         System.out.println("\nAnda memilih TPS " + tps.getTpsById(selectedTps).getNama()
                 + " dengan jumlah pemilih sebanyak " + tps.getTpsById(selectedTps).getJumlah() + " orang");
 
-        System.out.println("Input perolehan suara paslon 01:");
+        System.out.println("<<<---INPUT DARI PETUGAS--->>>");
+        System.out.println("\nInput perolehan suara paslon 01:");
         int suara1 = inputValidasi();
         System.out.println("Input perolehan suara paslon 02:");
         int suara2 = inputValidasi();
         System.out.println("Input perolehan suara paslon 03:");
         int suara3 = inputValidasi();
-        int golput;
+        int golput = 0;
 
-        if (suara1 + suara2 + suara3 > tps.getTpsById(selectedTps).getJumlah()) {
-            System.out.println("kebanyakan anjing");
+        while (suara1 + suara2 + suara3 > tps.getTpsById(selectedTps).getJumlah()) {
+            System.out.println(
+                    "Input suara yang anda masukkan melebihi jumlah peserta pemilihan pada TPS tersebut \nSilahkan input kembali dengan benar");
+            System.out.println("\nInput perolehan suara paslon 01:");
+            suara1 = inputValidasi();
+            System.out.println("Input perolehan suara paslon 02:");
+            suara2 = inputValidasi();
+            System.out.println("Input perolehan suara paslon 03:");
+            suara3 = inputValidasi();
+        }
+
+        System.out.println("<<<---INPUT DARI SAKSI--->>>");
+        System.out.println("\nInput suara oleh saksi paslon 01");
+        int saksi1 = inputValidasi();
+        System.out.println("Input suara oleh saksi paslon 02");
+        int saksi2 = inputValidasi();
+        System.out.println("Input suara oleh saksi paslon 03");
+        int saksi3 = inputValidasi();
+
+        while (saksi1 != suara1 || saksi2 != suara2 || saksi3 != suara3) {
+            System.out.println("\nInput dari petugas dan saksi tidak sesuai, silahkan masukkan lagi");
+
+            System.out.println("<<<---INPUT DARI PETUGAS--->>>");
+            System.out.println("\nInput perolehan suara paslon 01:");
+            suara1 = inputValidasi();
+            System.out.println("Input perolehan suara paslon 02:");
+            suara2 = inputValidasi();
+            System.out.println("Input perolehan suara paslon 03:");
+            suara3 = inputValidasi();
+
+            while (suara1 + suara2 + suara3 > tps.getTpsById(selectedTps).getJumlah()) {
+                System.out.println(
+                        "Input suara yang anda masukkan melebihi jumlah peserta pemilihan pada TPS tersebut \nSilahkan input kembali dengan benar");
+                System.out.println("\nInput perolehan suara paslon 01:");
+                suara1 = inputValidasi();
+                System.out.println("Input perolehan suara paslon 02:");
+                suara2 = inputValidasi();
+                System.out.println("Input perolehan suara paslon 03:");
+                suara3 = inputValidasi();
+            }
+
+            System.out.println("<<<---INPUT DARI SAKSI--->>>");
+            System.out.println("\nInput suara oleh saksi paslon 01");
+            saksi1 = inputValidasi();
+            System.out.println("Input suara oleh saksi paslon 02");
+            saksi2 = inputValidasi();
+            System.out.println("Input suara oleh saksi paslon 03");
+            saksi3 = inputValidasi();
+        }
+
+        if (suara1 + suara2 + suara3 < tps.getTpsById(selectedTps).getJumlah()) {
+            golput = tps.getTpsById(selectedTps).getJumlah() - (suara1 + suara2 + suara3);
         }
     }
 
@@ -169,8 +219,8 @@ public class suara {
         int value = 0;
         boolean validInput = false;
 
-        while(!validInput){
-            System.out.print("Masukkan angka: ");
+        while (!validInput) {
+            // System.out.print("Masukkan angka: ");
 
             try {
                 value = scanner.nextInt();
@@ -179,7 +229,9 @@ public class suara {
                 System.out.println("Input yang diperbolehkan hanya numeric");
                 scanner.next(); // Hapus input yang bukan angka
             }
+
         }
         return value;
+        
     }
 }
