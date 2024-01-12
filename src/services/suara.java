@@ -148,7 +148,9 @@ public class suara {
             } while (!idTps.contains(selectedTps));
         }
 
-        while (!hasil.check(selectedTps)) {
+        boolean edit = false;
+
+        while (!hasil.check(selectedTps) && !edit ) {
             System.out.println("TPS ini telah menginputkan suara. Pilih salah satu opsi dibawah:");
             System.out.println("(1) Pilih TPS lain \n(2) Edit suara dari TPS ini");
             switch (inputValidasi()) {
@@ -163,93 +165,20 @@ public class suara {
                     selectedTps = inputValidasi();
                 }
                 case 2 -> {
-                    System.out.println("\nAnda mengedit TPS " + tps.getTpsById(selectedTps).getNama()
-                            + " dengan jumlah pemilih sebanyak " + tps.getTpsById(selectedTps).getJumlah() + " orang");
-
-                    System.out.println("<<<---INPUT DARI PETUGAS--->>>");
-                    System.out.println("\nInput perolehan suara paslon 01:");
-                    int suara1 = inputValidasi();
-                    System.out.println("Input perolehan suara paslon 02:");
-                    int suara2 = inputValidasi();
-                    System.out.println("Input perolehan suara paslon 03:");
-                    int suara3 = inputValidasi();
-                    int golput = 0;
-
-                    while (suara1 + suara2 + suara3 > tps.getTpsById(selectedTps).getJumlah()) {
-                        System.out.println(
-                                "Input suara yang anda masukkan melebihi jumlah peserta pemilihan pada TPS tersebut \nSilahkan input kembali dengan benar");
-                        System.out.println("\nInput perolehan suara paslon 01:");
-                        suara1 = inputValidasi();
-                        System.out.println("Input perolehan suara paslon 02:");
-                        suara2 = inputValidasi();
-                        System.out.println("Input perolehan suara paslon 03:");
-                        suara3 = inputValidasi();
-                    }
-
-                    System.out.println("<<<---INPUT DARI SAKSI--->>>");
-                    System.out.println("\nInput suara oleh saksi paslon 01");
-                    int saksi1 = inputValidasi();
-                    System.out.println("Input suara oleh saksi paslon 02");
-                    int saksi2 = inputValidasi();
-                    System.out.println("Input suara oleh saksi paslon 03");
-                    int saksi3 = inputValidasi();
-
-                    while (saksi1 != suara1 || saksi2 != suara2 || saksi3 != suara3) {
-                        System.out.println("\nInput dari petugas dan saksi tidak sesuai, silahkan masukkan lagi");
-
-                        System.out.println("<<<---INPUT DARI PETUGAS--->>>");
-                        System.out.println("\nInput perolehan suara paslon 01:");
-                        suara1 = inputValidasi();
-                        System.out.println("Input perolehan suara paslon 02:");
-                        suara2 = inputValidasi();
-                        System.out.println("Input perolehan suara paslon 03:");
-                        suara3 = inputValidasi();
-
-                        while (suara1 + suara2 + suara3 > tps.getTpsById(selectedTps).getJumlah()) {
-                            System.out.println(
-                                    "Input suara yang anda masukkan melebihi jumlah peserta pemilihan pada TPS tersebut \nSilahkan input kembali dengan benar");
-                            System.out.println("\nInput perolehan suara paslon 01:");
-                            suara1 = inputValidasi();
-                            System.out.println("Input perolehan suara paslon 02:");
-                            suara2 = inputValidasi();
-                            System.out.println("Input perolehan suara paslon 03:");
-                            suara3 = inputValidasi();
-                        }
-
-                        System.out.println("<<<---INPUT DARI SAKSI--->>>");
-                        System.out.println("\nInput suara oleh saksi paslon 01");
-                        saksi1 = inputValidasi();
-                        System.out.println("Input suara oleh saksi paslon 02");
-                        saksi2 = inputValidasi();
-                        System.out.println("Input suara oleh saksi paslon 03");
-                        saksi3 = inputValidasi();
-                    }
-
-                    int jumlah = tps.getTpsById(selectedTps).getJumlah();
-
-                    if (suara1 + suara2 + suara3 < jumlah) {
-                        golput = tps.getTpsById(selectedTps).getJumlah() - (suara1 + suara2 + suara3);
-                    }
-
-                    hasil.patchHasil(selectedTps, suara1, suara2, suara3, golput);
-
-                    System.out.println("\n<<<---SUMMARY--->>>");
-                    System.out.println("PASLON 1 : " + suara1 + "("
-                            + Math.round((suara1 * 100.0 / jumlah) * 100.0) / 100.0 + "%)");
-                    System.out.println("PASLON 2 : " + suara2 + "("
-                            + Math.round((suara2 * 100.0 / jumlah) * 100.0) / 100.0 + "%)");
-                    System.out.println("PASLON 3 : " + suara3 + "("
-                            + Math.round((suara3 * 100.0 / jumlah) * 100.0) / 100.0 + "%)");
-                    System.out.println(
-                            "GOLPUT : " + golput + "(" + Math.round((golput * 100.0 / jumlah) * 100.0) / 100.0 + "%)");
-                    System.out.println("\nTERIMA KASIH");
+                    edit = true;
                 }
             }
 
         }
 
-        System.out.println("\nAnda memilih TPS " + tps.getTpsById(selectedTps).getNama()
+        if(edit){
+            System.out.println("\nAnda memilih TPS " + tps.getTpsById(selectedTps).getNama()
                 + " dengan jumlah pemilih sebanyak " + tps.getTpsById(selectedTps).getJumlah() + " orang");
+        } else {
+            System.out.println("\nAnda mengedit TPS " + tps.getTpsById(selectedTps).getNama()
+                + " dengan jumlah pemilih sebanyak " + tps.getTpsById(selectedTps).getJumlah() + " orang");
+        }
+        
 
         System.out.println("\n<<<---INPUT DARI PETUGAS--->>>");
         System.out.println("Input perolehan suara paslon 01:");
@@ -316,6 +245,12 @@ public class suara {
             golput = tps.getTpsById(selectedTps).getJumlah() - (suara1 + suara2 + suara3);
         }
 
+        if(edit){
+            hasil.patchHasil(selectedTps, suara1, suara2, suara3, golput);
+        }else{
+            hasil.postHasil(selectedTps, suara1, suara2, suara3, golput);
+        }
+
         hasil.postHasil(selectedTps, suara1, suara2, suara3, golput);
 
         System.out.println("\n<<<---SUMMARY--->>>");
@@ -344,6 +279,5 @@ public class suara {
             }
         }
         return value;
-
     }
 }
