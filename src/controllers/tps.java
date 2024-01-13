@@ -89,8 +89,6 @@ public class tps {
                 if (resultSet.next()) {
                     nama = resultSet.getString("tps_name");
                     jumlahPemilih = resultSet.getInt("jumlahPemilih");
-                    // int jumlahKota = resultSet.getInt("jumlah_kota");
-
                 }
 
                 DB.close(connection);

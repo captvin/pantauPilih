@@ -11,12 +11,10 @@ import connection.DB;
 public class provinsi {
     private int id;
     private String nama;
-    // private int jumlahKota;
 
     public provinsi(int id, String nama) {
         this.id = id;
         this.nama = nama;
-        // this.jumlahKota = jumlahKota;
     }
 
     // Getter untuk ID Provinsi
@@ -42,7 +40,6 @@ public class provinsi {
                 while (resultSet.next()) {
                     int id = resultSet.getInt("prov_id");
                     String nama = resultSet.getString("prov_name");
-                    // int jumlahKota = resultSet.getInt("jumlah_kota");
 
                     provinsi provinsi = new provinsi(id, nama);
                     provinsiList.add(provinsi);
@@ -69,7 +66,6 @@ public class provinsi {
     
                 if (resultSet.next()) {
                     String nama = resultSet.getString("prov_name");
-                    // int jumlahKota = resultSet.getInt("jumlah_kota");
     
                     result = new provinsi(id, nama);
                 }
