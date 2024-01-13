@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import services.pantau;
 import services.suara;
 
 public class App {
@@ -19,8 +20,7 @@ public class App {
         if (opsi == 1) {
             suara.main(); // Memanggil method untuk menampilkan data provinsi dari Suara.java
         } else if (opsi == 2) {
-            // Menjalankan opsi lain
-            // ...
+            pantau.main();
         } else {
             System.out.println("Opsi tidak valid.");
         }
