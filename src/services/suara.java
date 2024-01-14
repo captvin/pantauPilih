@@ -90,8 +90,8 @@ public class suara {
         if (!idKec.contains(selectedKec)) {
             do {
                 System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor kecamatan yang tersedia: ");
-                selectedKota = inputValidasi();
-            } while (!idKec.contains(selectedKota));
+                selectedKec = inputValidasi();
+            } while (!idKec.contains(selectedKec));
         }
 
         // STEP PILIH DESA
