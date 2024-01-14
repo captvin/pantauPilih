@@ -196,4 +196,58 @@ public class hasil {
         }
         return hasilList;
     }
+
+    public static List<hasil> getKec(int idKec){
+        List<hasil> hasilList = new ArrayList<>();
+        Connection connection = DB.connect();
+
+        if (connection != null){
+            try{
+                PreparedStatement statement = connection.prepareStatement("SELECT s.subdis_name  AS 'by', SUM(hs.paslon1) AS paslon1, SUM(hs.paslon2) AS paslon2, SUM(hs.paslon3) AS paslon3, SUM(hs.golput) AS golput, SUM(t.jumlahPemilih) AS total FROM hasilSuara hs INNER JOIN tps t ON hs.id_tps = t.tps_id RIGHT JOIN subdistricts s ON t.subdis_id = s.subdis_id RIGHT JOIN districts d ON s.dis_id = d.dis_id RIGHT JOIN cities c ON d.city_id = c.city_id RIGHT JOIN provinces p ON c.prov_id = p.prov_id WHERE s.dis_id = "+ idKec +" GROUP BY s.subdis_name");
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()){
+                    String by = resultSet.getString("by");
+                    int suara1 = resultSet.getInt("paslon1");
+                    int suara2 = resultSet.getInt("paslon2");
+                    int suara3 = resultSet.getInt("paslon3");
+                    int golput = resultSet.getInt("golput");
+
+                    hasil hasil = new hasil(by, suara1, suara2, suara3, golput);
+                    hasilList.add(hasil);
+                }
+                DB.close(connection);
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return hasilList;
+    }
+
+    public static List<hasil> getDesa(int idDesa){
+        List<hasil> hasilList = new ArrayList<>();
+        Connection connection = DB.connect();
+
+        if (connection != null){
+            try{
+                PreparedStatement statement = connection.prepareStatement("SELECT t.tps_name  AS 'by', SUM(hs.paslon1) AS paslon1, SUM(hs.paslon2) AS paslon2, SUM(hs.paslon3) AS paslon3, SUM(hs.golput) AS golput, SUM(t.jumlahPemilih) AS total FROM hasilSuara hs INNER JOIN tps t ON hs.id_tps = t.tps_id RIGHT JOIN subdistricts s ON t.subdis_id = s.subdis_id RIGHT JOIN districts d ON s.dis_id = d.dis_id RIGHT JOIN cities c ON d.city_id = c.city_id RIGHT JOIN provinces p ON c.prov_id = p.prov_id WHERE t.subdis_id = "+ idDesa +" GROUP BY t.tps_name");
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()){
+                    String by = resultSet.getString("by");
+                    int suara1 = resultSet.getInt("paslon1");
+                    int suara2 = resultSet.getInt("paslon2");
+                    int suara3 = resultSet.getInt("paslon3");
+                    int golput = resultSet.getInt("golput");
+
+                    hasil hasil = new hasil(by, suara1, suara2, suara3, golput);
+                    hasilList.add(hasil);
+                }
+                DB.close(connection);
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return hasilList;
+    }
 }
