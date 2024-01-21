@@ -1,5 +1,7 @@
 package services;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -12,114 +14,65 @@ import controllers.hasil;
 import controllers.kecamatan;
 import controllers.kota;
 
+
+
 public class suara {
+    private static int selectReferensi(List<?> referensiList, String jenisReferensi) {
+        List<Integer> idList = new ArrayList<>();
+        
+        // Menampilkan data referensi yang telah diambil dari database
+        if (referensiList != null && !referensiList.isEmpty()) {
+            System.out.println("Pilih " + jenisReferensi + ":");
+            for (Object referensi : referensiList) {
+                // Pastikan referensi memiliki metode getId() dan getNama()
+                int id = (int) invokeMethod(referensi, "getId");
+                String nama = (String) invokeMethod(referensi, "getNama");
+
+                idList.add(id);
+                System.out.println("(" + id + ") " + nama);
+            }
+            System.out.print("Masukkan nomor " + jenisReferensi + " yang anda pilih:");
+        } else {
+            System.out.println("Gagal mengambil data " + jenisReferensi + ".");
+        }
+
+        // input referensi yang dipilih
+        int selectedReferensi = inputValidasi();
+
+        if (!idList.contains(selectedReferensi)) {
+            do {
+                System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor " + jenisReferensi + " yang tersedia: ");
+                selectedReferensi = inputValidasi();
+            } while (!idList.contains(selectedReferensi));
+        }
+
+        return selectedReferensi;
+    }
+
+    private static Object invokeMethod(Object object, String methodName) {
+        try {
+            Method method = object.getClass().getMethod(methodName);
+            return method.invoke(object);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main() {
-        // STEP PILIH PROVINSI
+
         List<provinsi> daftarProvinsi = provinsi.getAllProvinsi();
-        List<Integer> idProv = new ArrayList<>();
+        int selectedProv = selectReferensi(daftarProvinsi, "Provinsi");
 
-        // Menampilkan data Provinsi yang telah diambil dari database
-        if (daftarProvinsi != null) {
-            System.out.println("Pilih Provinsi:");
-            for (provinsi provinsi : daftarProvinsi) {
-                idProv.add(provinsi.getId());
-                System.out.println("(" + provinsi.getId() + ") " + provinsi.getNama());
-            }
-            System.out.print("Masukkan nomor provinsi yang anda pilih:");
-        } else {
-            System.out.println("Gagal mengambil data Provinsi.");
-        }
 
-        // input provinsi yang dipilih
-        int prov = inputValidasi();
+        List<kota> daftarKota = kota.getKotaInProvinsi(selectedProv);
+        int selectedKota = selectReferensi(daftarKota, "Kota");
 
-        if (!idProv.contains(prov)) {
-            do {
-                System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor provinsi yang tersedia: ");
-                prov = inputValidasi();
-            } while (!idProv.contains(prov));
-        }
-
-        // STEP PILIH KOTA
-        List<kota> daftarKota = kota.getKotaInProvinsi(prov);
-        List<Integer> idKota = new ArrayList<>();
-
-        // Menampilkan data kota yang telah diambil dari database
-        if (daftarKota != null) {
-            System.out.println(
-                    "\nBerikut ini daftar kota yang ada di provinsi " + provinsi.getProvinsiById(prov).getNama());
-            for (kota kota : daftarKota) {
-                idKota.add(kota.getId());
-                System.out.println("(" + kota.getId() + ") " + kota.getNama());
-            }
-            System.out.print("Masukkan nomor kota yang anda pilih:");
-        } else {
-            System.out.println("Gagal mengambil data Provinsi.");
-        }
-
-        // input kota yang dipilih
-        int selectedKota = inputValidasi();
-
-        if (!idKota.contains(selectedKota)) {
-            do {
-                System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor kota yang tersedia: ");
-                selectedKota = inputValidasi();
-            } while (!idKota.contains(selectedKota));
-        }
-
-        // STEP PILIH KECAMATAN
         List<kecamatan> daftarKec = kecamatan.getKecInKota(selectedKota);
-        List<Integer> idKec = new ArrayList<>();
+        int selectedKec = selectReferensi(daftarKec, "Kecamatan");
 
-        // Menampilkan data kecamatan yang telah diambil dari database
-        if (daftarKec != null) {
-            System.out.println(
-                    "\nBerikut ini daftar kecamatan yang ada di kota " + kota.getKotaById(selectedKota));
-            for (kecamatan kecamatan : daftarKec) {
-                idKec.add(kecamatan.getId());
-                System.out.println("(" + kecamatan.getId() + ") " + kecamatan.getNama());
-            }
-            System.out.print("Masukkan nomor kecamatan yang anda pilih:");
-        } else {
-            System.out.println("Gagal mengambil data Kecamatan.");
-        }
-
-        // input kecamatan yang dipilih
-        int selectedKec = inputValidasi();
-
-        if (!idKec.contains(selectedKec)) {
-            do {
-                System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor kecamatan yang tersedia: ");
-                selectedKec = inputValidasi();
-            } while (!idKec.contains(selectedKec));
-        }
-
-        // STEP PILIH DESA
         List<desa> daftarDesa = desa.getDesaInKec(selectedKec);
-        List<Integer> idDesa = new ArrayList<>();
-
-        // Menampilkan data desa yang telah diambil dari database
-        if (daftarDesa != null) {
-            System.out.println(
-                    "\nBerikut ini daftar desa yang ada di kecamatan " + kecamatan.getKecById(selectedKec));
-            for (desa desa : daftarDesa) {
-                idDesa.add(desa.getId());
-                System.out.println("(" + desa.getId() + ") " + desa.getNama());
-            }
-            System.out.print("Masukkan nomor Desa yang anda pilih:");
-        } else {
-            System.out.println("Gagal mengambil data Desa.");
-        }
-
-        // input desa yang dipilih
-        int selectedDesa = inputValidasi();
-
-        if (!idDesa.contains(selectedDesa)) {
-            do {
-                System.out.print("\nInput anda tidak valid. \nMasukkan kembali nomor desa yang tersedia: ");
-                selectedDesa = inputValidasi();
-            } while (!idDesa.contains(selectedDesa));
-        }
+        int selectedDesa = selectReferensi(daftarDesa, "Desa");
 
         // STEP PILIH TPS
         List<tps> daftarTps = tps.getTpsInDesa(selectedDesa);
@@ -147,6 +100,7 @@ public class suara {
                 selectedTps = inputValidasi();
             } while (!idTps.contains(selectedTps));
         }
+
 
         boolean edit = false;
 
