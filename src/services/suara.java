@@ -23,8 +23,8 @@ public class suara {
         if (daftarProvinsi != null) {
             System.out.println("Pilih Provinsi:");
             for (provinsi provinsi : daftarProvinsi) {
-                idProv.add(provinsi.getId());
-                System.out.println("(" + provinsi.getId() + ") " + provinsi.getNama());
+                idProv.add(provinsi.id());
+                System.out.println("(" + provinsi.id() + ") " + provinsi.nama());
             }
             System.out.print("Masukkan nomor provinsi yang anda pilih:");
         } else {
@@ -48,7 +48,7 @@ public class suara {
         // Menampilkan data kota yang telah diambil dari database
         if (daftarKota != null) {
             System.out.println(
-                    "\nBerikut ini daftar kota yang ada di provinsi " + provinsi.getProvinsiById(prov).getNama());
+                    "\nBerikut ini daftar kota yang ada di provinsi " + provinsi.getProvinsiById(prov).nama());
             for (kota kota : daftarKota) {
                 idKota.add(kota.getId());
                 System.out.println("(" + kota.getId() + ") " + kota.getNama());

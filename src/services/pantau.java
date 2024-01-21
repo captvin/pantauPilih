@@ -70,8 +70,8 @@ public class pantau {
                 if (daftarProvinsi != null) {
                     System.out.println("Pilih Provinsi:");
                     for (provinsi provinsi : daftarProvinsi) {
-                        idProv.add(provinsi.getId());
-                        System.out.println("(" + provinsi.getId() + ") " + provinsi.getNama());
+                        idProv.add(provinsi.id());
+                        System.out.println("(" + provinsi.id() + ") " + provinsi.nama());
                     }
                     System.out.print("Masukkan nomor provinsi yang anda pilih:");
                 } else {
@@ -111,7 +111,7 @@ public class pantau {
                                 hasil.golput() + "(" + persen(hasil.golput(), total) + "%)", total);
                     }
                     System.out
-                            .println("\n<<<---SUMMARY PROVINSI " + provinsi.getProvinsiById(prov).getNama() + "--->>>");
+                            .println("\n<<<---SUMMARY PROVINSI " + provinsi.getProvinsiById(prov).nama() + "--->>>");
                     System.out.printf("%-15s %-15s %-15s %-15s %-15s%n", "PASLON 1", "PASLON 2", "PASLON 3", "GOLPUT",
                             "TOTAL");
                     System.out.printf("%-15s %-15s %-15s %-15s %-15s%n", total1 + "(" + persen(total1, totalAll) + "%)",
@@ -132,8 +132,8 @@ public class pantau {
                 if (daftarProvinsi != null) {
                     System.out.println("Pilih Provinsi:");
                     for (provinsi provinsi : daftarProvinsi) {
-                        idProv.add(provinsi.getId());
-                        System.out.println("(" + provinsi.getId() + ") " + provinsi.getNama());
+                        idProv.add(provinsi.id());
+                        System.out.println("(" + provinsi.id() + ") " + provinsi.nama());
                     }
                     System.out.print("Masukkan nomor provinsi yang anda pilih:");
                 } else {
@@ -157,7 +157,7 @@ public class pantau {
                 if (daftarKota != null) {
                     System.out.println(
                             "\nBerikut ini daftar kota yang ada di provinsi "
-                                    + provinsi.getProvinsiById(prov).getNama());
+                                    + provinsi.getProvinsiById(prov).nama());
                     for (kota kota : daftarKota) {
                         idKota.add(kota.getId());
                         System.out.println("(" + kota.getId() + ") " + kota.getNama());
@@ -221,8 +221,8 @@ public class pantau {
                 if (daftarProvinsi != null) {
                     System.out.println("Pilih Provinsi:");
                     for (provinsi provinsi : daftarProvinsi) {
-                        idProv.add(provinsi.getId());
-                        System.out.println("(" + provinsi.getId() + ") " + provinsi.getNama());
+                        idProv.add(provinsi.id());
+                        System.out.println("(" + provinsi.id() + ") " + provinsi.nama());
                     }
                     System.out.print("Masukkan nomor provinsi yang anda pilih:");
                 } else {
@@ -247,7 +247,7 @@ public class pantau {
                 if (daftarKota != null) {
                     System.out.println(
                             "\nBerikut ini daftar kota yang ada di provinsi "
-                                    + provinsi.getProvinsiById(prov).getNama());
+                                    + provinsi.getProvinsiById(prov).nama());
                     for (kota kota : daftarKota) {
                         idKota.add(kota.getId());
                         System.out.println("(" + kota.getId() + ") " + kota.getNama());
@@ -340,8 +340,8 @@ public class pantau {
                 if (daftarProvinsi != null) {
                     System.out.println("Pilih Provinsi:");
                     for (provinsi provinsi : daftarProvinsi) {
-                        idProv.add(provinsi.getId());
-                        System.out.println("(" + provinsi.getId() + ") " + provinsi.getNama());
+                        idProv.add(provinsi.id());
+                        System.out.println("(" + provinsi.id() + ") " + provinsi.nama());
                     }
                     System.out.print("Masukkan nomor provinsi yang anda pilih:");
                 } else {
@@ -366,7 +366,7 @@ public class pantau {
                 if (daftarKota != null) {
                     System.out.println(
                             "\nBerikut ini daftar kota yang ada di provinsi "
-                                    + provinsi.getProvinsiById(prov).getNama());
+                                    + provinsi.getProvinsiById(prov).nama());
                     for (kota kota : daftarKota) {
                         idKota.add(kota.getId());
                         System.out.println("(" + kota.getId() + ") " + kota.getNama());

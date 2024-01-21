@@ -42,11 +42,7 @@ public class wilayah {
 
                 ResultSet resultSet = statement.executeQuery();
 
-                wilayahList = DB.getResults(resultSet, rs ->
-                        {
-                            return mapper.apply(rs);
-                        }
-                );
+                wilayahList = DB.getResults(resultSet, mapper::apply);
 
                 DB.close(connection);
             } catch (SQLException e) {
@@ -66,11 +62,9 @@ public class wilayah {
                 statement.setInt(1, idParam);
     
                 ResultSet resultSet = statement.executeQuery();
-    
-                result = DB.getResult(resultSet, rs -> {
-                    return mapper.apply(rs);
-                });
-    
+
+                result = DB.getResult(resultSet, mapper::apply);
+
                 DB.close(connection);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -78,5 +72,4 @@ public class wilayah {
         }
         return result;
     }
-    
 }

@@ -8,24 +8,7 @@ import java.util.List;
 
 import connection.DB;
 
-public class provinsi {
-    private int id;
-    private String nama;
-
-    public provinsi(int id, String nama) {
-        this.id = id;
-        this.nama = nama;
-    }
-
-    // Getter untuk ID Provinsi
-    public int getId() {
-        return id;
-    }
-
-    // Getter untuk nama Provinsi
-    public String getNama() {
-        return nama;
-    }
+public record provinsi (int id, String nama) {
 
     // Method untuk mengambil semua data Provinsi dari database
     public static List<provinsi> getAllProvinsi() {
