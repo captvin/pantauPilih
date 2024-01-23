@@ -155,7 +155,7 @@ public class suara {
             System.out.println("TPS ini telah menginputkan suara. Pilih salah satu opsi dibawah:");
             System.out.println("(1) Pilih TPS lain \n(2) Edit suara dari TPS ini");
             switch (inputValidasi()) {
-                case 1: {
+                case 1 -> {
                     System.out.println(
                             "\nBerikut ini daftar TPS yang ada di desa " + desa.getDesaById(selectedDesa));
                     for (tps tps : daftarTps) {
@@ -165,7 +165,7 @@ public class suara {
                     System.out.print("Masukkan nomor TPS yang anda pilih:");
                     selectedTps = inputValidasi();
                 }
-                case 2: {
+                case 2 -> {
                     edit = true;
                 }
             }
